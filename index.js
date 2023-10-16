@@ -52,10 +52,6 @@ paymentFormEl.addEventListener('submit', (event)=>{
 })
 
 
-
-
-
-
 // __________________________________________________________________________
 //                          FUNCTION SECTION
 // =_________________________________________________________________________
@@ -88,6 +84,7 @@ getTotalPrice()
 orderId++
 forEachOrder()
 render()
+console.log(orderId)
 }
 
 
@@ -144,12 +141,10 @@ let removeItem = (removedOrder)=> {
 
     priceArr = newPriceArr
     // update Price Arr for the reduce method... with newPriceArr
-
-    count--
+    orderId--
     getTotalPrice()
     render()
-
-    console.log(priceArr)
+ console.log(orderId)
     closeWindow()
 }
 
