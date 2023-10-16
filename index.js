@@ -62,8 +62,6 @@ paymentFormEl.addEventListener('submit', (event)=>{
 
 
 let addItem = (clickedItem)=> {
-
-  
 // filter out the clicked item.....
 const targetMenuObj = Menu.filter((copyOfMenu)=>{
     return copyOfMenu.id == clickedItem
@@ -87,12 +85,8 @@ newOrdersObj.push({name, price, orderId})
 
 
 getTotalPrice()
-
 orderId++
 forEachOrder()
-
-
-
 render()
 }
 
@@ -151,6 +145,7 @@ let removeItem = (removedOrder)=> {
     priceArr = newPriceArr
     // update Price Arr for the reduce method... with newPriceArr
 
+    count--
     getTotalPrice()
     render()
 
@@ -159,7 +154,6 @@ let removeItem = (removedOrder)=> {
 }
 
 // have price updated once the object is REMOVED....
-
 
 let getTotalPrice = ()=> {
     totalPrice = priceArr.reduce((total, current)=>{return total + current},0)
@@ -196,23 +190,20 @@ let toggleCheckoutDisplay = ()=> {
 }
 
 let submitPayment = ()=> {
-
-
     toggleCheckoutDisplay()
-    
 }
 
 let thankCustomer = ()=> {
     const paymentFormData = new FormData(paymentFormEl)
-let payeeName = paymentFormData.get('PayeeName')
+    let payeeName = paymentFormData.get('PayeeName')
 
-orderEl.style.display = 'none'
+    orderEl.style.display = 'none'
 
-let p = document.createElement('p')
-p.classList.add('thankYouMessage')
-p.innerText = `Thanks, ${payeeName}! Your order is on it's way!`
-thankYouContainer.appendChild(p)
-const thankYouEl = document.querySelector('.thankYouMessage')
+    let p = document.createElement('p')
+    p.classList.add('thankYouMessage')
+    p.innerText = `Thanks, ${payeeName}! Your order is on it's way!`
+    thankYouContainer.appendChild(p)
+    const thankYouEl = document.querySelector('.thankYouMessage')
 }
 
 render()
