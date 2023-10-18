@@ -1,14 +1,21 @@
-// __________________________________________________________________________
-//                          IMPORT SECTION
-// =_________________________________________________________________________
+
+// ██ ███    ███ ██████   ██████  ██████  ████████ ███████ 
+// ██ ████  ████ ██   ██ ██    ██ ██   ██    ██    ██      
+// ██ ██ ████ ██ ██████  ██    ██ ██████     ██    ███████ 
+// ██ ██  ██  ██ ██      ██    ██ ██   ██    ██         ██ 
+// ██ ██      ██ ██       ██████  ██   ██    ██    ███████
+
+
 import Menu from './data.js'
 
 
 
 
-// __________________________________________________________________________
-//                         GLOBAL VARIABLES
-// =_________________________________________________________________________
+// ██    ██  █████  ██████  ██  █████  ██████  ██      ███████ ███████
+// ██    ██ ██   ██ ██   ██ ██ ██   ██ ██   ██ ██      ██      ██
+// ██    ██ ███████ ██████  ██ ███████ ██████  ██      █████   ███████
+//  ██  ██  ██   ██ ██   ██ ██ ██   ██ ██   ██ ██      ██           ██
+//   ████   ██   ██ ██   ██ ██ ██   ██ ██████  ███████ ███████ ███████
 
 let priceArr = []
 let orderArr = []
@@ -18,9 +25,12 @@ let orderId = 0;
 let displayed = false
 
 
-// __________________________________________________________________________
-//                         DOM section
-// =_________________________________________________________________________
+// ██████   ██████  ███    ███ ███████
+// ██   ██ ██    ██ ████  ████ ██
+// ██   ██ ██    ██ ██ ████ ██ ███████
+// ██   ██ ██    ██ ██  ██  ██      ██
+// ██████   ██████  ██      ██ ███████
+
 
 const cardEl = document.querySelector('.container')
 const orderEl = document.querySelector('.orderSection')
@@ -31,9 +41,21 @@ const formEl = document.querySelector('.form')
 const paymentFormEl = document.querySelector('.paymentForm')
 const thankYouContainer = document.querySelector('.thankYouContainer')
 
-// __________________________________________________________________________
-//                          EVENT LISTENER SECTION
-// =_________________________________________________________________________
+
+
+
+// ███████ ██    ██ ███████ ███    ██ ████████
+// ██      ██    ██ ██      ████   ██    ██
+// █████   ██    ██ █████   ██ ██  ██    ██
+// ██       ██  ██  ██      ██  ██ ██    ██
+// ███████   ████   ███████ ██   ████    ██
+
+// ██      ██ ███████ ████████ ███████ ███    ██ ███████ ██████  ███████
+// ██      ██ ██         ██    ██      ████   ██ ██      ██   ██ ██
+// ██      ██ ███████    ██    █████   ██ ██  ██ █████   ██████  ███████
+// ██      ██      ██    ██    ██      ██  ██ ██ ██      ██   ██      ██
+// ███████ ██ ███████    ██    ███████ ██   ████ ███████ ██   ██ ███████
+
 
 document.addEventListener('click', (event)=>{
 
@@ -52,33 +74,28 @@ paymentFormEl.addEventListener('submit', (event)=>{
 })
 
 
+// ███████ ██    ██ ███    ██  ██████ ████████ ██  ██████  ███    ██ ███████
+// ██      ██    ██ ████   ██ ██         ██    ██ ██    ██ ████   ██ ██
+// █████   ██    ██ ██ ██  ██ ██         ██    ██ ██    ██ ██ ██  ██ ███████
+// ██      ██    ██ ██  ██ ██ ██         ██    ██ ██    ██ ██  ██ ██      ██
+// ██       ██████  ██   ████  ██████    ██    ██  ██████  ██   ████ ███████
 // __________________________________________________________________________
-//                          FUNCTION SECTION
-// =_________________________________________________________________________
+
 
 
 let addItem = (clickedItem)=> {
-// filter out the clicked item.....
+
 const targetMenuObj = Menu.filter((copyOfMenu)=>{
     return copyOfMenu.id == clickedItem
 })[0]
 
-// Destructure the properties within the filtered Item
 const {name, price, emoji} = targetMenuObj
 
-
-
-// if there are more than 0 items display block.. else display none..
 orderEl.style.display = 'block'
-
-
-// push price and name of items into an array...
 
 priceArr.push(price)
 orderArr.push(name)
 newOrdersObj.push({name, price, orderId})
-
-
 
 getTotalPrice()
 orderId++
@@ -105,7 +122,6 @@ let forEachOrder = ()=> {
 }
 
 let render = ()=> {
-  
     let orderedThings = forEachOrder()
     cardEl.innerHTML = mappedMenu
     orderEl.innerHTML =   `<h1 class="appendHere">Your Order</h1>
@@ -120,8 +136,6 @@ let render = ()=> {
 
 
 
-// add a remove item .......
-
 let removeItem = (removedOrder)=> {
 
     const targetOrderObj = newOrdersObj.filter((copyOfNewOrders)=> {
@@ -134,21 +148,17 @@ let removeItem = (removedOrder)=> {
 
     newOrdersObj = postRemovalOrders
 
-    // need to update priceArr ....
     let newPriceArr = newOrdersObj.map((orders)=> {
         return orders.price
     })
 
     priceArr = newPriceArr
-    // update Price Arr for the reduce method... with newPriceArr
     orderId--
     getTotalPrice()
     render()
- console.log(orderId)
     closeWindow()
 }
 
-// have price updated once the object is REMOVED....
 
 let getTotalPrice = ()=> {
     totalPrice = priceArr.reduce((total, current)=>{return total + current},0)
