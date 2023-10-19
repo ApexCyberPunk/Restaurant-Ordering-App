@@ -1,8 +1,8 @@
 
-// ██ ███    ███ ██████   ██████  ██████  ████████ ███████ 
-// ██ ████  ████ ██   ██ ██    ██ ██   ██    ██    ██      
-// ██ ██ ████ ██ ██████  ██    ██ ██████     ██    ███████ 
-// ██ ██  ██  ██ ██      ██    ██ ██   ██    ██         ██ 
+// ██ ███    ███ ██████   ██████  ██████  ████████ ███████
+// ██ ████  ████ ██   ██ ██    ██ ██   ██    ██    ██
+// ██ ██ ████ ██ ██████  ██    ██ ██████     ██    ███████
+// ██ ██  ██  ██ ██      ██    ██ ██   ██    ██         ██
 // ██ ██      ██ ██       ██████  ██   ██    ██    ███████
 
 
@@ -83,13 +83,13 @@ paymentFormEl.addEventListener('submit', (event)=>{
 
 
 
-let addItem = (clickedItem)=> {
+const addItem = (clickedItem)=> {
 
 const targetMenuObj = Menu.filter((copyOfMenu)=>{
     return copyOfMenu.id == clickedItem
 })[0]
 
-const {name, price, emoji} = targetMenuObj
+const {name, price} = targetMenuObj
 
 orderEl.style.display = 'block'
 
@@ -99,13 +99,13 @@ newOrdersObj.push({name, price, orderId})
 
 getTotalPrice()
 orderId++
-forEachOrder()
+renderOrder()
 render()
 console.log(orderId)
 }
 
 
-let forEachOrder = ()=> {
+const renderOrder = ()=> {
 
     let theHtml = ''
 
@@ -121,8 +121,8 @@ let forEachOrder = ()=> {
     return theHtml
 }
 
-let render = ()=> {
-    let orderedThings = forEachOrder()
+const render = ()=> {
+    let orderedThings = renderOrder()
     cardEl.innerHTML = mappedMenu
     orderEl.innerHTML =   `<h1 class="appendHere">Your Order</h1>
     ${orderedThings}
@@ -136,11 +136,7 @@ let render = ()=> {
 
 
 
-let removeItem = (removedOrder)=> {
-
-    const targetOrderObj = newOrdersObj.filter((copyOfNewOrders)=> {
-        return copyOfNewOrders.orderId == removedOrder
-    })
+const removeItem = (removedOrder)=> {
 
     const postRemovalOrders = newOrdersObj.filter((copyOfNewOrders)=> {
         return copyOfNewOrders.orderId != removedOrder
@@ -160,11 +156,11 @@ let removeItem = (removedOrder)=> {
 }
 
 
-let getTotalPrice = ()=> {
+const getTotalPrice = ()=> {
     totalPrice = priceArr.reduce((total, current)=>{return total + current},0)
 }
 
-let mappedMenu = Menu.map((copyOfMenu)=> {
+const mappedMenu = Menu.map((copyOfMenu)=> {
     const {name, ingredients, id, price, emoji} = copyOfMenu
     return ` <div class="menuItem">
                 <h1 class="emoji child1">${emoji}</h1>
@@ -178,13 +174,13 @@ let mappedMenu = Menu.map((copyOfMenu)=> {
             `
 }).join('')
 
-let closeWindow = ()=> {
+const closeWindow = ()=> {
         if(priceArr.length == 0) {
             orderEl.style.display = 'none'
         }
 }
 
-let toggleCheckoutDisplay = ()=> {
+const toggleCheckoutDisplay = ()=> {
     if (!displayed) {
         formEl.style.display = "block"
         displayed = true
@@ -194,21 +190,18 @@ let toggleCheckoutDisplay = ()=> {
     }
 }
 
-let submitPayment = ()=> {
+const submitPayment = ()=> {
     toggleCheckoutDisplay()
 }
 
-let thankCustomer = ()=> {
+const thankCustomer = ()=> {
     const paymentFormData = new FormData(paymentFormEl)
     let payeeName = paymentFormData.get('PayeeName')
-
     orderEl.style.display = 'none'
-
     let p = document.createElement('p')
     p.classList.add('thankYouMessage')
     p.innerText = `Thanks, ${payeeName}! Your order is on it's way!`
     thankYouContainer.appendChild(p)
-    const thankYouEl = document.querySelector('.thankYouMessage')
 }
 
 render()
